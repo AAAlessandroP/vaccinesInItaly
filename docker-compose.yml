@@ -1,0 +1,41 @@
+# se qualcosa non funziona, è forse perchè compose usa i cont che già ha buildato, non li ricrea onTheFly dal dockerfile ogni volta
+# docker rm treni_web_1
+# docker rmi treni_web
+# docker-compose up
+version: "3.7"
+services:
+  mysqlz:
+    image: mysql:5.5.62
+    networks:
+      - db-pma-net
+    environment:
+      MYSQL_ROOT_PASSWORD: my-secret-pw
+    ports:
+      - "3306:3306"
+      # ports: \ X:Y per connettermi dall'interno del network a lui uso Y e dall'host la porta X
+  web:
+    depends_on:
+      - mysqlz
+    networks:
+      - db-pma-net
+    build:
+      context: .
+      target: debug
+    volumes: #lo tolgo se uso prod
+      - .:/work #lo tolgo se uso prod
+    ports:
+      - "3000:3000"
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin:5.0.2
+  #   networks:
+  #     - db-pma-net
+  #   ports:
+  #     - "8080:80"
+  #   environment:
+  #     PMA_HOST: mysqlz
+  #   depends_on:
+  #     - mysqlz
+  #     # servizi che aspetta sinconamente
+
+networks:
+  db-pma-net:
