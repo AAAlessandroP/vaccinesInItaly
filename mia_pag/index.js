@@ -124,6 +124,8 @@ $(() => {
     })
 
     $.get("/storicoNazionale").then(storicoNazionale => {
+        console.log(`storicoNazionale`, storicoNazionale);
+        console.log(`storicoNazionale`, storicoNazionale.map(element => element.data_somministrazione.substring(0, 10)))
         var ctx = document.getElementById('myChart').getContext('2d');
         var myChart = new Chart(ctx, {
             type: 'line',
