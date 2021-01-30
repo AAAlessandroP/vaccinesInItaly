@@ -132,9 +132,23 @@ $(() => {
             data: {
                 labels: storicoNazionale.map(element => element.data_somministrazione.substring(0, 10)),
                 datasets: [{
-                    label: 'andamento giornaliero Nazionale',
+                    label: 'andamento giornaliero totale Nazionale',
                     data: storicoNazionale.map(element => element.totale),
                     borderColor: ['rgba(255, 99, 132, 1)'],
+                    pointHitRadius: 50,
+                    fill: false,
+                },
+                {
+                    label: 'andamento giornaliero prima_dose Nazionale',
+                    data: storicoNazionale.map(element => element.prima_dose),
+                    borderColor: ['rgba(255, 255, 0, 1)'],
+                    pointHitRadius: 50,
+                    fill: false,
+                },
+                {
+                    label: 'andamento giornaliero seconda_dose Nazionale',
+                    data: storicoNazionale.map(element => element.seconda_dose),
+                    borderColor: ['rgba(255, 0, 132, 1)'],
                     pointHitRadius: 50,
                     fill: false,
                 }]

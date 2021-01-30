@@ -19,27 +19,28 @@ fetch("https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/
         app.get("/storicoNazionale", (req, res) => {
 
 
-            let totPerData = {}// [data]=num_totale_vaccinati_italia
+            let totPerData = {}// [data]={prima_dose, seconda_dose}
 
             got.data.forEach(record => {
-                if (totPerData[record.data_somministrazione] == undefined)
-                    totPerData[record.data_somministrazione] = 0
+                let lui = totPerData[record.data_somministrazione]
+                if (lui == undefined)
+                    totPerData[record.data_somministrazione] = { prima_dose: record.prima_dose, seconda_dose: record.seconda_dose }
                 else
-                    totPerData[record.data_somministrazione] += record.totale
+                    totPerData[record.data_somministrazione] = { prima_dose: lui.prima_dose + record.prima_dose, seconda_dose: lui.seconda_dose + record.seconda_dose }
             });
-
 
             let sorted = Object.keys(totPerData).map(data => {
                 return {
                     data_somministrazione: data,
-                    totale: totPerData[data],
+                    totale: totPerData[data].prima_dose + totPerData[data].seconda_dose,
+                    prima_dose: totPerData[data].prima_dose,
+                    seconda_dose: totPerData[data].seconda_dose,
                 }
             }).sort((obj1, obj2) => {//necessario, sennò al frontend arrivano le date ordinate con codice ascii
                 let data1 = new Date(obj1.data_somministrazione)
                 let data2 = new Date(obj2.data_somministrazione)
                 return data1.getTime() - data2.getTime()
             })
-
 
             res.json(sorted)
         })
