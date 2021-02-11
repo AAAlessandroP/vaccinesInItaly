@@ -28,7 +28,6 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 
 
 // var popup = L.popup();
-
 // function onMapClick(e) {
 //     popup
 //         .setLatLng(e.latlng)
@@ -52,6 +51,9 @@ $(() => {
                     break;
                 case "PIE":
                     marker = { lat: 45.073521, lon: 7.69043 }
+                    break;
+                case "LAZ":
+                    marker = { lat: 41.849105, lon: 12.491455 }
                     break;
                 case "TOS":
                     marker = { lat: 43.771094, lon: 11.239014 }
