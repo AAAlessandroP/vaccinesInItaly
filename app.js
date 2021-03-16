@@ -5,6 +5,8 @@ app.use(express.static("mia_pag"));
 const listener = app.listen(process.env.PORT || 3000)
 
 
+// sasdsad
+
 fetch("https://raw.githubusercontent.com/italia/covid19-opendata-vaccini/master/dati/vaccini-summary-latest.json").then(json => {
     json.json().then(got => {
         // console.log(`got`, got);
